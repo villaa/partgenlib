@@ -1,0 +1,60 @@
+
+###############################################################
+# Stand alone programs for raw data parsing in LBCFBATS packages 
+#
+# Usage:  make, make clean 
+#
+#
+#-----
+# 20140912  A. Villano -- initial version, make the simplest version
+#                         of raw file reading with all .o files locally
+#                         dumped and all other files explicitly linked
+###############################################################
+
+
+#install in the location ${LBCFSCRIPTBINDIR} if this is not defined,exit
+#ifndef LBCFSCRIPTBINDIR
+#  $(error LBCFSCRIPTBINDIR not defined, please run LBCFDIR/lbcfsetup.sh)
+#endif
+
+MAKEFLAGS += --no-print-directory
+
+#for including standard makefiles
+TOPDIR := ../
+
+# Define different type header directories
+PARTGEN := $(TOPDIR)/partgen
+
+#trick for getting the git version in the code
+#GIT_VERSION = $(shell sh -c 'git describe --abbrev=4 --always')
+
+#CFLAGS += -D__GIT_VERSION=\"$(GIT_VERSION)\"
+CFLAGS += -D__GIT_VERSION=\"v0.0\"
+
+#add for debuging with gprof profiler
+#PROFFLAGS += -pg
+
+all: eprint siminprint
+
+eprint: eprint.c partgen.o
+	g++ -Wall $(PROFFLAGS) $(CFLAGS) -I$(PARTGEN) -o eprint eprint.c partgen.o `root-config --cflags --libs`
+
+siminprint: siminprint.c partgen.o
+	g++ -Wall $(PROFFLAGS) $(CFLAGS) -I$(PARTGEN) -o siminprint siminprint.c partgen.o `root-config --cflags --libs`
+
+partgen.o: $(PARTGEN)/partgen.cpp
+	g++ -Wall $(PROFFLAGS) -I$(PARTGEN) -c $(PARTGEN)/partgen.cpp -o partgen.o `root-config --cflags`
+
+install: eprint 
+	@mkdir -p ~/bin 
+	@cp eprint ~/bin/ 
+	@cp siminprint ~/bin/ 
+
+clean:
+	rm -f *.o
+	rm -f eprint 
+	rm -f ~/bin/eprint
+	rm -f siminprint 
+	rm -f ~/bin/siminprint
+
+
