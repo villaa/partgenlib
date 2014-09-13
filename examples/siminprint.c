@@ -198,6 +198,8 @@ int main(int argc, char *argv[])
 
        vector<double> linespec;
        E = EGen_rand(dist.first,dist.second,&frand);
+       //FIXME
+       E = sqrt(E*E); //make positive, sometimes is negative not sure why
        genFlatDist(linespec,&frand,planes[i]);
        x = linespec[2];
        y = linespec[3];
