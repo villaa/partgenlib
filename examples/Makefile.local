@@ -45,7 +45,7 @@ siminprint: siminprint.c partgen.o
 partgen.o: $(PARTGEN)/partgen.cpp
 	g++ -Wall $(PROFFLAGS) -I$(PARTGEN) -c $(PARTGEN)/partgen.cpp -o partgen.o `root-config --cflags`
 
-install: eprint 
+install: eprint siminprint
 	@mkdir -p ~/bin 
 	@cp eprint ~/bin/ 
 	@cp siminprint ~/bin/ 
