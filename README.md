@@ -19,6 +19,8 @@ in the `examples/` directory.
 
 ##Dependency
 
+Need to have ROOT installed. 
+
 ##Checkout
 
 
