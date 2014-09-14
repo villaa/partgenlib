@@ -163,10 +163,10 @@ int main(int argc, char *argv[])
     }
 
     vector<vector<double> > planes;
+    fileStream >> zmid >> xmin >> xmax >> ymin >> ymax >> zthk;
     while(!fileStream.eof()){
 
       vector<double> oneplane;
-      fileStream >> zmid >> xmin >> xmax >> ymin >> ymax >> zthk;
       oneplane.push_back(zmid);
       oneplane.push_back(xmin);
       oneplane.push_back(xmax);
@@ -176,6 +176,7 @@ int main(int argc, char *argv[])
 
       planes.push_back(oneplane);
 
+      fileStream >> zmid >> xmin >> xmax >> ymin >> ymax >> zthk;
     }
 
    //encode the energy histogram
@@ -192,7 +193,7 @@ int main(int argc, char *argv[])
    string space="\t";
    std::cout.precision(5);
    //std::cout << std::dec << std::setw(20) << std::setfill('0');
-   std::cout << "\t\t this line intentionally left blank" << endl;
+   std::cout << "\t\t" << 0 << "\t" << 0 << "\t" << 0 << endl;
    for(int i=0;i<planes.size();i++){
      for(int j=0;j<ntrig;j++){
 
